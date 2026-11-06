@@ -1,0 +1,660 @@
+
+.catalog-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.catalog-head h1 {
+    font-size: 1.9rem;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+}
+
+.catalog-head p {
+    margin-top: 0.3rem;
+    color: #71717a;
+    font-size: 0.85rem;
+}
+
+.catalog-empty {
+    margin: 2.5rem 0;
+    padding: 2rem 1rem;
+    border: 1px dashed #e4e4e7;
+    border-radius: 3px;
+    color: #a1a1aa;
+    font-size: 0.88rem;
+    text-align: center;
+    animation: catalog-empty-in 260ms ease both;
+}
+
+@keyframes catalog-empty-in {
+    from {
+        opacity: 0;
+        transform: translateY(0.4rem);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ---------- 商品网格 ---------- */
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+    gap: 1.1rem;
+    align-items: start;
+    grid-auto-rows: max-content;
+    transition: grid-template-columns 420ms cubic-bezier(.22, .61, .36, 1);
+}
+
+/* 展开态：网格变单列，被点的卡片占满整行 */
+.product-grid.is-expanded-mode {
+    grid-template-columns: 1fr;
+}
+
+.product-grid.is-expanded-mode > .product-card:not(.is-expanded) {
+    display: none;
+}
+
+.product-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    overflow: hidden;
+    border: 1px solid #e4e4e7;
+    border-radius: 3px;
+    transition:
+        transform 220ms cubic-bezier(.22, .61, .36, 1),
+        border-color 220ms ease,
+        box-shadow 220ms ease;
+    animation: card-rise 480ms cubic-bezier(.22, .61, .36, 1) backwards;
+    animation-delay: calc(var(--card-index, 0) * 60ms);
+}
+
+.product-card.is-settled {
+    animation: none;
+}
+
+.product-card:hover {
+    transform: translateY(-3px);
+    border-color: #18181B;
+    box-shadow: 0 10px 24px -18px rgba(24, 24, 27, 0.6);
+}
+
+.product-card__media {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: #fafafa;
+}
+
+.product-card__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 420ms cubic-bezier(.22, .61, .36, 1);
+}
+
+.product-card:hover .product-card__media img {
+    transform: scale(1.05);
+}
+
+.product-card__placeholder {
+    font-size: 2.4rem;
+    font-weight: 500;
+    color: #d4d4d8;
+}
+
+.product-card__badge {
+    position: absolute;
+    top: 0.6rem;
+    left: 0.6rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 2px;
+    background: #18181B;
+    color: #fff;
+    font-size: 0.7rem;
+    letter-spacing: 0.02em;
+    animation: badge-pop 320ms cubic-bezier(.22, .61, .36, 1) both;
+}
+
+.product-card__body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding: 0.9rem 0.95rem 1rem;
+}
+
+.product-card__type {
+    color: #a1a1aa;
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.product-card__body h3 {
+    font-size: 0.98rem;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+.product-card__seller {
+    color: #71717a;
+    font-size: 0.75rem;
+}
+
+.product-card__price {
+    display: flex;
+    align-items: baseline;
+    gap: 0.45rem;
+    margin-top: 0.2rem;
+    flex-wrap: wrap;
+}
+
+.product-card__price strong {
+    font-size: 1.15rem;
+    font-weight: 600;
+}
+
+.product-card__price s {
+    color: #a1a1aa;
+    font-size: 0.78rem;
+}
+
+.product-card__discount {
+    color: #15803d;
+    font-size: 0.72rem;
+}
+
+.product-card__actions {
+    display: flex;
+    gap: 0.4rem;
+    margin-top: 0.7rem;
+}
+
+/* ---------- 带图标的按钮 ---------- */
+
+.icon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.32rem;
+    flex: 1 1 0;
+    padding: 0.45rem 0.5rem;
+    border: 1px solid #d4d4d8;
+    border-radius: 2px;
+    background: #fff;
+    color: #18181B;
+    font: inherit;
+    font-size: 0.78rem;
+    cursor: pointer;
+    transition:
+        background-color 180ms ease,
+        border-color 180ms ease,
+        color 180ms ease,
+        transform 180ms ease;
+}
+
+.icon-btn svg {
+    width: 0.95rem;
+    height: 0.95rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.icon-btn:hover {
+    border-color: #18181B;
+    transform: translateY(-1px);
+}
+
+.icon-btn:active {
+    transform: translateY(0);
+}
+
+.icon-btn--primary {
+    border-color: #18181B;
+    background: #18181B;
+    color: #fff;
+}
+
+.icon-btn--primary:hover {
+    background: #2c2c31;
+}
+
+/* ---------- 骨架屏 ---------- */
+
+.product-card--skeleton {
+    pointer-events: none;
+}
+
+.product-card--skeleton .product-card__media {
+    background: #f4f4f5;
+}
+
+.skeleton-line {
+    display: block;
+    height: 0.7rem;
+    border-radius: 2px;
+    background: linear-gradient(90deg, #f4f4f5 25%, #ececee 37%, #f4f4f5 63%);
+    background-size: 400% 100%;
+    animation: skeleton-shine 1.4s ease infinite;
+}
+
+.skeleton-line--short {
+    width: 60%;
+}
+
+.skeleton-line--price {
+    width: 40%;
+    height: 0.9rem;
+    margin-top: 0.4rem;
+}
+
+.product-card.is-expanded {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    height: 26rem;
+    border-color: #18181B;
+    box-shadow: 0 18px 44px -30px rgba(24, 24, 27, 0.55);
+    transition:
+        border-color 220ms ease,
+        box-shadow 220ms ease;
+}
+
+.product-card.is-expanded > .product-card__media {
+    flex: 0 0 45%;
+    max-width: 45%;
+    aspect-ratio: auto;
+    min-height: 0;
+    height: 100%;
+    overflow: hidden;
+    border-right: 1px solid #f0f0f1;
+}
+
+.product-card.is-expanded > .product-card__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.product-card.is-expanded:hover > .product-card__media img {
+    transform: none;
+}
+
+/* 收起态的内容在展开时隐藏 */
+.product-card.is-expanded > .product-card__body {
+    display: none;
+}
+
+/* 展开态内容默认隐藏 */
+.product-card__detail {
+    display: none;
+}
+
+.product-card.is-expanded > .product-card__detail {
+    display: flex;
+    flex: 1 1 0;
+    min-width: 0;
+    flex-direction: column;
+    padding: 1rem 1.15rem 1.1rem;
+    overflow-y: auto;
+    animation: detail-in 320ms cubic-bezier(.22, .61, .36, 1) both;
+}
+
+/* 收起按钮 */
+.collapse-btn {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.6rem;
+    z-index: 2;
+    display: none;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.3rem 0.55rem;
+    border: 1px solid #d4d4d8;
+    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.94);
+    color: #18181B;
+    font: inherit;
+    font-size: 0.72rem;
+    cursor: pointer;
+    transition:
+        background-color 180ms ease,
+        color 180ms ease,
+        border-color 180ms ease;
+}
+
+.product-card.is-expanded .collapse-btn {
+    display: inline-flex;
+}
+
+.collapse-btn svg {
+    width: 0.8rem;
+    height: 0.8rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.collapse-btn:hover {
+    background: #18181B;
+    border-color: #18181B;
+    color: #fff;
+}
+
+.detail-head h2 {
+    margin: 0.15rem 0 0.25rem;
+    font-size: 1.25rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+}
+
+.detail-price {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: 0.6rem;
+}
+
+.detail-price strong {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.detail-price s {
+    color: #a1a1aa;
+    font-size: 0.8rem;
+}
+
+.detail-promo {
+    padding-left: 0.5rem;
+    border-left: 2px solid #18181B;
+    color: #52525b;
+    font-size: 0.74rem;
+}
+
+.detail-params {
+    display: grid;
+    grid-template-columns: 5.5rem 1fr;
+    gap: 0.35rem 0.75rem;
+    margin: 0.75rem 0;
+    padding: 0.7rem 0.8rem;
+    border: 1px solid #f0f0f1;
+    border-radius: 2px;
+    background: #fafafa;
+    font-size: 0.78rem;
+}
+
+.detail-params dt {
+    color: #a1a1aa;
+}
+
+.detail-params dd {
+    margin: 0;
+    color: #18181B;
+}
+
+.detail-follows {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+}
+
+.follow-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.4rem 0.7rem;
+    border: 1px solid #d4d4d8;
+    border-radius: 2px;
+    background: #fff;
+    color: #18181B;
+    font: inherit;
+    font-size: 0.76rem;
+    cursor: pointer;
+    transition:
+        background-color 180ms ease,
+        border-color 180ms ease,
+        color 180ms ease;
+}
+
+.follow-btn svg {
+    width: 0.8rem;
+    height: 0.8rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.follow-btn:hover:not(:disabled) {
+    border-color: #18181B;
+}
+
+.follow-btn.is-followed {
+    border-color: #18181B;
+    background: #18181B;
+    color: #fff;
+}
+
+.follow-btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.detail-actions {
+    display: flex;
+    gap: 0.4rem;
+    margin-top: auto;
+    padding-top: 0.9rem;
+}
+
+.detail-actions .icon-btn {
+    flex: 0 0 auto;
+    padding: 0.45rem 0.9rem;
+}
+
+.cart-page {
+    max-width: 48rem;
+    margin: 0 auto;
+    padding: 2.5rem 2rem 4rem;
+}
+
+.cart-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-top: 1.2rem;
+}
+
+.cart-row {
+    display: grid;
+    grid-template-columns: 3.6rem 1fr auto;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.75rem;
+    border: 1px solid #e4e4e7;
+    border-radius: 3px;
+    animation: card-rise 380ms cubic-bezier(.22, .61, .36, 1) both;
+    animation-delay: calc(var(--row-index, 0) * 45ms);
+}
+
+.cart-row__media {
+    width: 3.6rem;
+    height: 3.6rem;
+    overflow: hidden;
+    border-radius: 2px;
+    background: #fafafa;
+}
+
+.cart-row__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.cart-row h3 {
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.cart-row small {
+    color: #a1a1aa;
+    font-size: 0.72rem;
+}
+
+.cart-qty {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.cart-qty button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.6rem;
+    height: 1.6rem;
+    border: 1px solid #d4d4d8;
+    border-radius: 2px;
+    background: #fff;
+    color: #18181B;
+    font: inherit;
+    cursor: pointer;
+    transition: border-color 160ms ease, background-color 160ms ease;
+}
+
+.cart-qty button:hover {
+    border-color: #18181B;
+    background: #f4f4f5;
+}
+
+.cart-qty span {
+    min-width: 1.4rem;
+    text-align: center;
+    font-size: 0.82rem;
+}
+
+.cart-row__price {
+    min-width: 5.5rem;
+    text-align: right;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.cart-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 1.2rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e4e4e7;
+}
+
+.cart-summary strong {
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.cart-empty {
+    margin-top: 2rem;
+    color: #a1a1aa;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+/* ---------- 动画 ---------- */
+
+@keyframes card-rise {
+    from {
+        opacity: 0;
+        transform: translateY(0.7rem);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes badge-pop {
+    from {
+        opacity: 0;
+        transform: scale(0.85);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes detail-in {
+    from {
+        opacity: 0;
+        transform: translateX(0.6rem);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes skeleton-shine {
+    from {
+        background-position: 100% 0;
+    }
+    to {
+        background-position: 0 0;
+    }
+}
+
+@media (max-width: 720px) {
+    .product-card.is-expanded {
+        flex-direction: column;
+    }
+
+    .product-card.is-expanded > .product-card__media {
+        flex: 0 0 auto;
+        max-width: none;
+        min-height: 12rem;
+        max-height: 16rem;
+        border-right: 0;
+        border-bottom: 1px solid #f0f0f1;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .product-card,
+    .product-card__badge,
+    .cart-row,
+    .skeleton-line {
+        animation-duration: 1ms;
+        animation-delay: 0ms;
+    }
+
+    .product-card,
+    .product-card__detail,
+    .collapse-btn {
+        transition-duration: 1ms;
+        transition-delay: 0ms;
+        animation-duration: 1ms;
+    }
+}

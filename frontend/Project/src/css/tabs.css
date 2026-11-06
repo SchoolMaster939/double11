@@ -1,0 +1,83 @@
+
+.nav-right {
+    position: relative;
+    gap: 0;
+    padding-right: 1.25rem;
+}
+
+.nav-item {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding: 0 1.25rem;
+    font: inherit;
+    color: #18181B;
+    background: none;
+    border: 0;
+    cursor: pointer;
+}
+
+
+.nav-item::after {
+    content: "";
+    position: absolute;
+    left: 1.25rem;
+    right: 1.25rem;
+    bottom: calc(50% - 0.75em);
+    height: 1px;
+    background: #18181B;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 320ms ease;
+}
+
+.nav-item:hover::after,
+.nav-item[aria-selected="true"]::after {
+    transform: scaleX(1);
+}
+
+
+.page {
+    display: none;
+    max-width: 72rem;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+}
+
+.page[aria-hidden="false"] {
+    display: block;
+}
+
+.page > * {
+    opacity: 0;
+    transform: translateX(-1.5rem);
+}
+
+.page[data-reveal="on"] > * {
+    animation: page-reveal 560ms cubic-bezier(.22, .61, .36, 1) both;
+    animation-delay: calc(var(--page-delay, 0ms) + var(--reveal-step, 90ms) * var(--reveal-index, 0));
+}
+
+@keyframes page-reveal {
+    from {
+        opacity: 0;
+        transform: translateX(-1.5rem);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .nav-item::after {
+        transition-duration: 1ms;
+    }
+
+    .page[data-reveal="on"] > * {
+        animation-duration: 1ms;
+        animation-delay: 0ms;
+    }
+}

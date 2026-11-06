@@ -51,6 +51,8 @@ body{
     height: 9vh;
 
     display: flex;
+
+    border-bottom: 2px solid #18181B;
 }
 .nav-left{
     width: 65vw;
@@ -64,7 +66,6 @@ body{
     height: 100%;
 
     display: flex;
-    justify-content: flex-end;
     align-items: center;
 }
 .nav-container{
@@ -72,8 +73,7 @@ body{
 
     flex: none;             
     padding: 1.5%;
-    margin-right: 3.5%;
-    margin-left: 3.5%;
+    margin: auto;
 }
 .nav-container:has(.search){
     width: 22.5rem;
